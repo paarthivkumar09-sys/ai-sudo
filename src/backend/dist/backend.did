@@ -1,0 +1,95 @@
+type UserRole = 
+ variant {
+   admin;
+   reviewer;
+ };
+type Timestamp = int;
+type SystemHealth = 
+ record {
+   activeAgents: nat;
+   pendingApprovals: nat;
+   requestsPerMinute: float64;
+   uptime: int;
+ };
+type RiskLevel = 
+ variant {
+   green;
+   red;
+   yellow;
+ };
+type LogFilter = 
+ record {
+   agentId: opt text;
+   limit: opt nat;
+   riskLevel: opt text;
+   status: opt text;
+ };
+type InterceptResult = 
+ record {
+   blastRadius: opt BlastRadius;
+   id: text;
+   reason: text;
+   riskLevel: RiskLevel;
+   status: variant {
+             allowed;
+             blocked;
+             pending;
+           };
+ };
+type CommandStatus = 
+ variant {
+   allowed;
+   approved;
+   blocked;
+   pending;
+   rejected;
+ };
+type CommandLog = 
+ record {
+   agentId: text;
+   approverId: opt text;
+   approverReason: opt text;
+   blastRadius: opt BlastRadius;
+   command: text;
+   commandType: text;
+   id: text;
+   riskLevel: RiskLevel;
+   status: CommandStatus;
+   timestamp: Timestamp;
+ };
+type BlastRadius = 
+ record {
+   estimatedFiles: nat;
+   estimatedRows: nat;
+   severity: text;
+ };
+type ApprovalResult = 
+ record {
+   message: text;
+   success: bool;
+ };
+type Analytics = 
+ record {
+   activeAgents: nat;
+   approvedCommands: nat;
+   blockedCommands: nat;
+   disastersPrevented: nat;
+   greenCommands: nat;
+   redCommands: nat;
+   rejectedCommands: nat;
+   requestsPerMinute: float64;
+   totalCommands: nat;
+   yellowCommands: nat;
+ };
+service : {
+  approve: (commandId: text, decision: bool, callerId: text, reason:
+   opt text) -> (ApprovalResult);
+  getAnalytics: () -> (Analytics) query;
+  getLogs: (filter: opt LogFilter) -> (vec CommandLog) query;
+  getMyRole: () -> (opt UserRole) query;
+  getPendingApprovals: () -> (vec CommandLog) query;
+  getSystemHealth: () -> (SystemHealth) query;
+  intercept: (command: text, agentId: text, commandType: text) ->
+   (InterceptResult);
+  setUserRole: (userId: text, role: UserRole) -> (bool);
+}

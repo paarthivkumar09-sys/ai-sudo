@@ -1,0 +1,48 @@
+// Version: 1.0.0
+type BlastRadius__733206849 =
+  {estimatedFiles : Nat; estimatedRows : Nat; severity : Text};
+type CommandLogInternal__383521445 =
+  {
+    agentId : Text;
+    var approverId : ?Text;
+    var approverReason : ?Text;
+    blastRadius : ?BlastRadius__733206849;
+    command : Text;
+    commandType : Text;
+    id : Text;
+    riskLevel : RiskLevel__139911093;
+    var status : CommandStatus__564935908;
+    timestamp : Timestamp__495103492
+  };
+type CommandStatus__564935908 =
+  {#allowed; #approved; #blocked; #pending; #rejected};
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type RiskLevel__139911093 = {#green; #red; #yellow};
+type Timestamp__301639476 = Int;
+type Timestamp__495103492 = Timestamp__301639476;
+type UserRole__746436612 = {#admin; #reviewer};
+actor {
+  stable agents :
+    {var root : Node__46230540<Text, Int>; var size : Nat__490723111};
+  stable commandCounter : {var value : Nat};
+  stable logs :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?CommandLogInternal__383521445]];
+      var elementIndex : Nat__490723111
+    };
+  stable roles :
+    {
+      var root : Node__46230540<Text, UserRole__746436612>;
+      var size : Nat__490723111
+    };
+  stable startTime : Int
+};

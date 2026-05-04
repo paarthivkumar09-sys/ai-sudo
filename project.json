@@ -1,0 +1,26 @@
+{
+  "overview": "AI Sudo is a human-in-the-loop AI governance dashboard that intercepts commands from AI agents, classifies them by risk level (GREEN/YELLOW/RED), and routes critical actions to human operators for approval before execution. It provides a real-time approval queue, full audit logs, and system analytics — giving teams complete visibility and control over what AI agents do.",
+  "features": [
+    "Real-time approval queue for high-risk AI agent commands",
+    "Risk classification engine: GREEN (auto-execute), YELLOW (warning), RED (requires approval)",
+    "Pattern detection for dangerous commands, root paths, and destructive flags",
+    "Blast radius analysis — estimated impact before any RED command executes",
+    "Audit logs with filtering by status, risk level, agent, and date",
+    "Analytics dashboard: total commands, blocked actions, disasters prevented",
+    "System health metrics: active agents, requests per minute",
+    "Role-based access for Admin and Reviewer operators via Internet Identity",
+    "REST API gateway: POST /intercept for agents, POST /approve for decisions",
+    "Real-time polling updates on the approval panel"
+  ],
+  "category": "security-governance",
+  "tags": [
+    "ai-governance",
+    "human-in-the-loop",
+    "security",
+    "audit",
+    "approval-workflow",
+    "middleware",
+    "ai-safety"
+  ],
+  "last_updated": "2026-05-04T11:15:24.135Z"
+}
